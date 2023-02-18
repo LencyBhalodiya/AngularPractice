@@ -1,0 +1,13 @@
+<div class="container">
+  <button class="btn btn-primary" (click)="onChange()">Click me</button>
+  <br />
+  <hr />
+  <h4>{{ name }} and {{ fun() }}</h4>
+  <!-- string interpolation, but can be access within component by default -->
+  <hr>
+  <label for="name">Enter Your Name: </label>
+  
+  <!-- two way binding -->
+  <input type="text" [(ngModel)] = "inputName">
+  <p>{{inputName}} </p>
+</div>
