@@ -1,15 +1,9 @@
+<div class="container-fluid">
+  <app-game-control (intervalFired) = "onIntervalFired($event)"></app-game-control>
+</div>
+<hr>
 <div class="container">
-  <app-cockpit
-    (serverCreated)="onServerAdded($event)"
-    (blueprintCreated)="onBlueprintAdded($event)"
-  ></app-cockpit>
-  <hr />
-  <div class="row">
-    <div class="col-xs-12">
-      <app-server-element
-        *ngFor="let server of serverElements"
-        [element]="server"
-      ></app-server-element>
-    </div>
-  </div>
+  <app-odd *ngFor="let odd of oddNumber" [odd] = "odd"></app-odd>
+  <app-even *ngFor="let even of evenNumber" [even] = "even"></app-even>
+
 </div>
