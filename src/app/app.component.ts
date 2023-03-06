@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Account } from './account.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers : [Account]
 })
-export class AppComponent {
-  numbers = [1, 2, 3, 4, 5];
-  oddNumbers = [1,3,5]
-  evenNumbers = [2,4]
-  onlyOdd = false;
-  value = 5;
+export class AppComponent implements OnInit {
+  users:{name: string}[] = [];
+  constructor(private accounts: Account){}
+  ngOnInit(): void {
+    this.users = this.accounts.user;
+  }
 }
