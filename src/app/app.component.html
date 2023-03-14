@@ -1,5 +1,9 @@
 <div class="container">
-  <app-input></app-input>
-  <br><hr>
-  <app-display [user] = "acc" *ngFor="let acc of users; let i = index" [i] = "i" ></app-display>
+  <span routerLink="/first" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
+    true}">first</span>
+  <span [routerLink]="['/second']" routerLinkActive="active" >Second</span>
+ <button [routerLink]="['/users',1,'customUser']"> Click me</button>
+<div class="wrap">
+  <router-outlet></router-outlet>
+</div>
 </div>

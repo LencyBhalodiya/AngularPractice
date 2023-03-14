@@ -1,6 +1,18 @@
 .container {
   margin-top: 30px;
 }
-.odd{
-  color:blue;
+span{
+  padding: 1rem;
+}
+span:hover{
+  background-color: lightgray;
+}
+.wrap{
+  display: flex;
+justify-content: space-evenly;
+}
+
+ 
+.active {
+  background-color: lightgray;
 }
