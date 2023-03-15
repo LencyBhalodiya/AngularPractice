@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-params',
@@ -9,7 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class ParamsComponent implements OnInit {
   id = 0;
   name = '';
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute,private router: Router){}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];  //only loads the data when componenet gets reload 
@@ -20,5 +20,9 @@ export class ParamsComponent implements OnInit {
       this.id = data['id'];
       this.name = data['name'];
     })
+  }
+
+  getMyDetails(){
+    this.router.navigate(['/users',2,'MyDetails'],{queryParams: {page:1,search: 'me'}})
   }
 }

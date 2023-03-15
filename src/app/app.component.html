@@ -2,8 +2,14 @@
   <span routerLink="/first" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
     true}">first</span>
   <span [routerLink]="['/second']" routerLinkActive="active" >Second</span>
- <button [routerLink]="['/users',1,'customUser']"> Click me</button>
+ <button [routerLink]="['/users']"> Click me</button>
 <div class="wrap">
   <router-outlet></router-outlet>
+</div>
+<hr>
+<div class="footer">
+  <button (click)="onSubmit()" >Login</button>
+  <button (click)="onSubmitOut()">logout</button>
+
 </div>
 </div>

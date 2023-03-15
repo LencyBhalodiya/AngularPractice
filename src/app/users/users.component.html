@@ -1,0 +1,12 @@
+<div class="container">
+<h3><a [routerLink]="['/users',1,'lemite']">LEmite</a></h3>
+<hr>
+<h3><a [routerLink]="['/users',2,'vansh']">vanshi</a></h3>
+<hr>
+<h3><a [routerLink]="['/users',3,'prems']">prem</a></h3>
+</div>
+<hr>
+<button (click)="onSubmit()"  > Edit</button>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

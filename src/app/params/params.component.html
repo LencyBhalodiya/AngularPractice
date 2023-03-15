@@ -1,5 +1,15 @@
 <h1>
-    <h1> hello my name is {{name}} and my id is {{id}} </h1>
+  <h1>hello my name is {{ name }} and my id is {{ id }}</h1>
 </h1>
-
-<button [routerLink]="['/users',2,'Asite']">Change details to asite</button>
+<hr><br>
+<button
+  [routerLink]="['/users', 2, 'Asite']"
+  [queryParams]="{ page: 1, search: 'asiteSolution' }"
+  [fragment]="'done'"
+>
+  Change details to asite
+</button>
+<hr>
+<div class="container">
+    <button (click)="getMyDetails()" >MyDetails Router</button>
+</div>
