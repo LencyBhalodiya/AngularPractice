@@ -1,46 +1,46 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  @ViewChild('f') signupForm:NgForm ;
-   answer = ''
-   submitt: boolean = false;
-   genders = ['male','female']
-  user = {
-    username: "",
-    email: '',
-    secretQuestion: '',
-    answer: '',
-    gender: ''
-  }
+export class AppComponent implements OnInit {
+  constructor(private fb: FormBuilder){}
+  genders = ['male', 'female'];
+  signupForm:FormGroup;
 
-  suggestUserName() {
-    const suggestedName = 'Superuser';
-  
-    this.signupForm.form.patchValue({
-      userData: {
-        username: suggestedName
-      }
+  // can also use this method for reactive appraoch rather than creating new formgroup
+  // profileForm = this.fb.group({ 
+  //   firstName: [''],
+  //   lastName: [''],
+  //   address: this.fb.group({
+  //     street: [''],
+  //     city: [''],
+  //     state: [''],
+  //     zip: ['']
+  //   }),
+  // });
+
+  ngOnInit(){
+    this.signupForm = new FormGroup({ // to create group of specific form field
+      'userData': new FormGroup({
+        'username': new FormControl(null,Validators.required),
+        'email': new FormControl(null,[Validators.required ,Validators.email]),
+      }),
+      'gender': new FormControl('male'),
+      'hobbies': new FormArray([])
     })
   }
-
-  // onSubmit(form: NgForm){
-  //   console.log('submitted');
-  //   console.log(form);
-  // }
-
+  onAddHobby(){
+    const control = new FormControl(null,Validators.required);
+    (<FormArray>this.signupForm.get('hobbies')).push(control)
+  }
+  get controls() {
+    return (this.signupForm.get('hobbies') as FormArray).controls;
+  }
   onSubmit(){
-    this.submitt = true;
-  this.user.username = this.signupForm.value.userData.username;
- this.user.email = this.signupForm.value.userData.email;
- this.user.secretQuestion = this.signupForm.value.secretQuestion;
-this.user.gender = this.signupForm.value.gender
-
-  this.signupForm.reset()
+    console.log(this.signupForm);
   }
 }
