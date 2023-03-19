@@ -1,46 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private fb: FormBuilder){}
-  genders = ['male', 'female'];
-  signupForm:FormGroup;
+  loadedPosts:Post[] = [];
+  isFetching = false;
 
-  // can also use this method for reactive appraoch rather than creating new formgroup
-  // profileForm = this.fb.group({ 
-  //   firstName: [''],
-  //   lastName: [''],
-  //   address: this.fb.group({
-  //     street: [''],
-  //     city: [''],
-  //     state: [''],
-  //     zip: ['']
-  //   }),
-  // });
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(){
-    this.signupForm = new FormGroup({ // to create group of specific form field
-      'userData': new FormGroup({
-        'username': new FormControl(null,Validators.required),
-        'email': new FormControl(null,[Validators.required ,Validators.email]),
-      }),
-      'gender': new FormControl('male'),
-      'hobbies': new FormArray([])
-    })
+  ngOnInit() {
+    this.fetchPosts();
   }
-  onAddHobby(){
-    const control = new FormControl(null,Validators.required);
-    (<FormArray>this.signupForm.get('hobbies')).push(control)
+
+  onCreatePost(postData: Post) {
+    // Send Http request
+    this.http
+      .post<{name:string}>(
+        'https://ng-http-371ef-default-rtdb.firebaseio.com/posts.json',
+        postData
+      )
+      .subscribe((responseData) => {
+        console.log(responseData);
+      });
   }
-  get controls() {
-    return (this.signupForm.get('hobbies') as FormArray).controls;
+
+  onFetchPosts() {
+    // Send Http request
+    this.fetchPosts();
   }
-  onSubmit(){
-    console.log(this.signupForm);
+
+  onClearPosts() {
+    // Send Http request
+  }
+
+  private fetchPosts() {
+    this.isFetching = true;
+    this.http
+      .get<{[key: string]: Post}>('https://ng-http-371ef-default-rtdb.firebaseio.com/posts.json')
+      .pipe(
+        map((responseData ) => {
+          const postArray:Post[] = [];
+          for (const key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+              postArray.push({ ...responseData[key], id: key });
+            }
+          }
+          return postArray;
+        })
+      )
+      .subscribe((posts) => {
+        this.isFetching = false;
+        this.loadedPosts = posts;
+      });
   }
 }
