@@ -1,74 +1,8 @@
+<app-header (featureSelected)="onNavigate($event)"></app-header>
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="userData">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              formControlName="username" 
-              class="form-control"
-            />
-            <span
-              *ngIf="
-                !signupForm.get('userData.username').valid &&
-                signupForm.get('userData.username').touched
-              "
-              class="help-block"
-            >
-              Please enter a valid username</span
-            >
-          </div>
-          <div class="form-group">
-            <label for="email">email</label>
-            <input
-              type="text"
-              id="email"
-              formControlName="email"
-              class="form-control"
-            />
-            <span
-              *ngIf="
-                !signupForm.get('userData.email').valid &&
-                signupForm.get('userData.email').touched
-              "
-              class="help-block"
-            >
-              Please enter a valid username</span
-            >
-          </div>
-        </div>
-
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input formControlName="gender" type="radio" [value]="gender" />{{
-              gender
-            }}
-          </label>
-        </div>
-        <div formArrayName="hobbies">   <!-- for creating many no of fields -->
-          <h4>Your Hobbies</h4>
-          <button class="btn btn-default" type="button" (click)="onAddHobby()">
-            Add Hobby
-          </button>
-        </div>
-        <div
-          class="for-group"
-          *ngFor="let hobbyControl of controls; let i = index"
-        >
-          <input type="text" class="form-control" [formControlName]="index" />
-        </div>
-
-        <span
-          *ngIf="!signupForm.valid && signupForm.touched"
-          class="help-block"
-        >
-          Please enter a valid username</span
-        >
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </form>
+    <div class="col-md-12">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
